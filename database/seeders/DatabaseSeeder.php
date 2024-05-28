@@ -1,6 +1,8 @@
 <?php
 
 namespace Database\Seeders;
+
+use App\Models\Technology;
 use Database\Seeders\ProjectSeeder;
 use Database\Seeders\TypeSeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,7 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(
             [
                 ProjectSeeder::class,
-                TypeSeeder::class
+                TypeSeeder::class,
+                TechnologySeeder::class,
             ]
             );
     }
