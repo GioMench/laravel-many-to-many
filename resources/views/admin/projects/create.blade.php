@@ -45,17 +45,35 @@
                 @enderror
             </div>
 
+            <!--project-type-->
             <div class="mb-3">
                 <label for="type_id" class="form-label">Type</label>
                 <select class="form-select" name="type_id" id="type_id">
                     <option selected disabled>Select type</option>
-                    @foreach ( $types as $type)
-
-                    <option value="{{$type->id}}" {{ $type->id == old('type_id') ? 'selected' : '' }}>{{$type->name}}</option>
-                        
+                    @foreach ($types as $type)
+                        <option value="{{ $type->id }}" {{ $type->id == old('type_id') ? 'selected' : '' }}>
+                            {{ $type->name }}</option>
                     @endforeach
                 </select>
             </div>
+
+            <!--project-type-->
+
+            <mb-3 class="d-flex gap-3 flex-wrap">
+                @foreach ($technologies as $technology)
+                    <div class="form-check">
+
+                        <input name="technologies[]" class="form-check-input" type="checkbox" value=""
+                            id="technology-{{ $technology->id }}" />
+                        <label class="form-check-label" for="technology-{{ $technology->id }}">
+                            {{ $technology->name }}</label>
+
+                    </div>
+                @endforeach
+            </mb-3>
+
+
+
 
 
             <!--project-year--->
