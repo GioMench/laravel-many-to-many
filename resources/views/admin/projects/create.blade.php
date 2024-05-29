@@ -63,10 +63,10 @@
                 @foreach ($technologies as $technology)
                     <div class="form-check">
 
-                        <input name="technologies[]" class="form-check-input" type="checkbox" value=""
-                            id="technology-{{ $technology->id }}" />
-                        <label class="form-check-label" for="technology-{{ $technology->id }}">
-                            {{ $technology->name }}</label>
+                        <input name="technologies[]" class="form-check-input" type="checkbox" value="{{ $technology->id }}" id="technology-{{ $technology->id }}" {{in_array($technology->id, old('technologies', [])) ? 'checked' : ''}}/>
+                        <label class="form-check-label" for="technology-{{ $technology->id }}" >
+                            {{ $technology->name }}
+                        </label>
 
                     </div>
                 @endforeach
