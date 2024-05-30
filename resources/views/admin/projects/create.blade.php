@@ -59,22 +59,26 @@
 
             <!--project-type-->
 
-            <mb-3 class="d-flex gap-3 flex-wrap">
+            <div class="mb-3 d-flex gap-3 flex-wrap">
                 @foreach ($technologies as $technology)
                     <div class="form-check">
 
-                        <input name="technologies[]" class="form-check-input" type="checkbox" value="{{ $technology->id }}" id="technology-{{ $technology->id }}" {{in_array($technology->id, old('technologies', [])) ? 'checked' : ''}}/>
-                        <label class="form-check-label" for="technology-{{ $technology->id }}" >
+                        <input name="technologies[]" class="form-check-input" type="checkbox" value="{{ $technology->id }}"
+                            id="technology-{{ $technology->id }}"
+                            {{ in_array($technology->id, old('technologies', [])) ? 'checked' : '' }} />
+                        <label class="form-check-label" for="technology-{{ $technology->id }}">
                             {{ $technology->name }}
                         </label>
 
                     </div>
                 @endforeach
-            </mb-3>
 
-
-
-
+            </div>
+            @error('technologies')
+                <div class="text-danger py-2">
+                    {{ $message }}
+                </div>
+            @enderror
 
             <!--project-year--->
             <div class="mb-3">
@@ -120,6 +124,7 @@
                     <div class="text-danger py-2"> {{ $message }}</div>
                 @enderror
             </div>
+            
             <button type="submit" class="btn btn-primary">
                 Create
 

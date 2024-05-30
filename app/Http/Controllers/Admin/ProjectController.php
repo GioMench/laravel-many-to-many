@@ -51,16 +51,17 @@ class ProjectController extends Controller
         $validated['slug'] = $slug;
 
         //create
-
-
         if ($request->has('preview_image')) {
             $image_path = Storage::put('uploads', $validated['preview_image']);
             //dd($image_path);
             $validated['preview_image'] = $image_path;
         };
 
-        Project::create($validated);
+        $project = Project::create($validated);
 
+        if($request->has('technologies')){
+            $project->technologies()->attach($validated['technologies']);
+        };
         //redirect
         return to_route('admin.projects.index')->with('message', 'Project created successfully');
 
@@ -81,7 +82,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -108,6 +110,12 @@ class ProjectController extends Controller
         //update
         $project->update($validated);
 
+        if($request->has('technologies')){
+            $project->technologies()->sync($validated['technologies']);
+        } else {
+            $project->technologies()->sync([]);
+        };
+
         //redirect
         return to_route('admin.projects.index')->with('message', "Project  $project->project_name update successfully");
     }
@@ -117,6 +125,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+       
         if($project->preview_image){
             //delete the old image
             Storage::delete($project->preview_image);
